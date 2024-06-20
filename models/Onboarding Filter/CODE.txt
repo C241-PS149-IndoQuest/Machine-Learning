@@ -1,0 +1,21 @@
+def recommend_destinations(preferred_categories, top_n=5):
+    # Filter the destinations based on preferred categories in any of the Category 1, 2, or 3 columns
+    filtered_df = df[
+        (df['Category 1'].isin(preferred_categories)) |
+        (df['Category 2'].isin(preferred_categories)) |
+        (df['Category 3'].isin(preferred_categories))
+    ]
+
+    # Sort the filtered destinations by Rating and select the top_n
+    recommended_destinations = filtered_df.sort_values(by='Rating', ascending=False).head(top_n)
+
+    return recommended_destinations[['Destination Name', 'Rating']]
+
+# Simulate user selecting their preferred categories
+user_preferred_categories = ['Historical Landmark', 'Temple', 'Beach', 'Wildlife', 'Mountain']
+
+# Get recommendations based on user preferences
+recommendations = recommend_destinations(user_preferred_categories, top_n=20)
+
+print("Recommended Destinations based on your preferences:")
+print(recommendations)
